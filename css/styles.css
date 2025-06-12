@@ -104,17 +104,17 @@ body {
 	background: #a8b2ba;
 }
 
-/* Empty state styling */
+/*Empty state styling*/
 #watchList:empty {
 	display: block;
 	text-align: center;
 	padding: 3rem 1rem;
 	color: black;
 	font-style: italic;
-}
+} 
 
 #watchList:empty::before {
-	content: "No saved items yet. Add some content to get started!";
+  content: "No saved items yet ya weldi. Add some content to get started!";
 }
 
 /* =====================
@@ -325,7 +325,6 @@ body {
 	}
 }
 
-/* Animation for new items
 .watch-slide-in {
 	animation: slideInFromRight 0.4s ease-out;
 }
@@ -340,4 +339,4 @@ body {
 		opacity: 1;
 		transform: translateX(0);
 	}
-}/*
+}

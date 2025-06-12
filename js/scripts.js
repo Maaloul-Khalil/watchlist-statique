@@ -103,146 +103,13 @@ function validateInputField(input, rules, data = []) {
    return true;
 }
 
-
-// Bootstrap custom client-side validation
-(function () {
-   "use strict";
-
-   document.addEventListener('DOMContentLoaded', function () {
-      const form = document.querySelector("#watchLaterForm");
-      console.log("Watch Later Manager initialized");
-
-      // Rating indicator functionality
-      const ratingInputs = document.querySelectorAll('input[name="rating"]');
-      const ratingText = document.getElementById("ratingText");
-      const ratingTexts = {
-         5: {
-            text: "Must Watch",
-            class: "badge-success"
-         },
-         4: {
-            text: "Recommended",
-            class: "badge-primary"
-         },
-         3: {
-            text: "Decent",
-            class: "badge-info"
-         },
-         2: {
-            text: "Meh",
-            class: "badge-warning"
-         },
-         1: {
-            text: "Skip",
-            class: "badge-danger"
-         },
-      };
-
-      // Add event listeners to rating inputs
-      ratingInputs.forEach((input) => {
-         input.addEventListener("change", function () {
-            if (this.checked) {
-               const rating = ratingTexts[this.value];
-               ratingText.textContent = rating.text;
-               ratingText.className = `badge ${rating.class}`;
-            }
-         });
-      });
-
-      form.addEventListener("submit", function (event) {
-         event.preventDefault(); // this prevents the default form submission
-         event.stopPropagation(); // this stops the event from bubbling up
-         console.log("Form submitted");
-
-         // Get selected rating
-         const selectedRating = form.querySelector('input[name="rating"]:checked');
-         const ratingFeedback = document.getElementById("ratingFeedback");
-
-         // Validate rating first
-         let ratingValid = true;
-         if (!selectedRating) {
-            ratingFeedback.style.display = "block";
-            ratingValid = false;
-            console.log("Validation failed: No rating selected");
-         } else {
-            ratingFeedback.style.display = "none";
-            ratingValid = true;
-            console.log("Selected rating:", selectedRating.value);
-         }
-
-         // Always add was-validated class to show Bootstrap validation
-         form.classList.add("was-validated");
-
-         let allFieldsValid = true;
-         for (const fieldId in validationRules) {
-            const input = document.getElementById(fieldId);
-            const rules = validationRules[fieldId];
-            const isValid = validateInputField(input, rules, watchItems);
-            if (!isValid) {
-               allFieldsValid = false;
-            }
-         }
-
-         // Check if form is valid AND rating is selected
-         if (form.checkValidity() && ratingValid && allFieldsValid) {
-            // Get form data
-            const title = document.getElementById("title").value.trim();
-            const url = document.getElementById("url").value.trim();
-            const creator = document.getElementById("creator").value.trim();
-            const comments = document.getElementById("comments").value.trim();
-            const rating = selectedRating.value;
-
-            const newItem = {
-               id: Date.now(),
-               title: title,
-               url: url,
-               creator: creator,
-               platform: getDomainName(url),
-               rating: rating,
-               comments: comments,
-               dateAdded: new Date().toLocaleDateString(),
-            };
-
-            watchItems.push(newItem);
-            console.log("New item added:", newItem);
-            console.log("Total items:", watchItems.length);
-
-            updateWatchList();
-            updateStats();
-
-            form.reset();
-            form.classList.remove("was-validated");
-            ratingFeedback.style.display = "none";
-
-            // Reset rating indicator
-            ratingText.textContent = "Select a rating";
-            ratingText.className = "badge badge-secondary";
-         } else {
-            console.log("Form validation failed");
-         }
-      }, false);
-
-      // Delete last item
-      document.getElementById("deleteLastBtn").addEventListener("click", function () {
-         if (watchItems.length > 0) {
-            const removedItem = watchItems.pop();
-            console.log("Last item removed:", removedItem.title);
-            updateWatchList();
-            updateStats();
-         } else {
-            console.log("No items to remove");
-         }
-      });
-   });
-})();
-
 // Update watch list display
 function updateWatchList() {
    const watchList = document.getElementById("watchList");
    console.log("Updating watch list with", watchItems.length, "items");
 
    if (watchItems.length === 0) {
-      watchList.innerHTML = '<li class="list-group-item text-muted">No items yet</li>';
+      watchList.innerHTML = '';
       return;
    }
 
@@ -332,3 +199,183 @@ function updateStats() {
    document.getElementById("totalCount").textContent = count;
    console.log("Stats updated - Total count:", count);
 }
+
+// Show or hide "No results" message based on visible items
+function updateNoResultsMessage() {
+   const items = document.querySelectorAll("#watchList .watch-item");
+
+   // Filter visible items
+   const visibleItems = Array.from(items).filter(item =>
+      window.getComputedStyle(item).display !== "none"
+   );
+
+   const watchList = document.getElementById("watchList");
+   const noResultsEl = document.getElementById("noResults");
+
+   if (visibleItems.length === 0) {
+      watchList.style.display = "none";
+      noResultsEl.style.display = "block";
+   } else {
+      watchList.style.display = "block";
+      noResultsEl.style.display = "none";
+   }
+}
+
+
+// Filter watch items by search term
+function filterWatchItems(searchTerm) {
+   const items = document.querySelectorAll(".watch-item");
+   items.forEach(item => {
+      const title = item.querySelector(".watch-link")?.textContent.trim().toLowerCase() || "";
+      if (title.startsWith(searchTerm)) {
+         item.style.display = "block";
+      } else {
+         item.style.display = "none";
+      }
+   });
+   updateNoResultsMessage();
+}
+
+// Initialize event listeners on DOM content loaded
+(function () {
+   "use strict";
+
+   document.addEventListener('DOMContentLoaded', function () {
+      const form = document.querySelector("#watchLaterForm");
+      console.log("Watch Later Manager initialized");
+
+      // Rating indicator functionality
+      const ratingInputs = document.querySelectorAll('input[name="rating"]');
+      const ratingText = document.getElementById("ratingText");
+      const ratingTexts = {
+         5: {
+            text: "Must Watch",
+            class: "badge-success"
+         },
+         4: {
+            text: "Recommended",
+            class: "badge-primary"
+         },
+         3: {
+            text: "Decent",
+            class: "badge-info"
+         },
+         2: {
+            text: "Meh",
+            class: "badge-warning"
+         },
+         1: {
+            text: "Skip",
+            class: "badge-danger"
+         },
+      };
+
+      ratingInputs.forEach((input) => {
+         input.addEventListener("change", function () {
+            if (this.checked) {
+               const rating = ratingTexts[this.value];
+               ratingText.textContent = rating.text;
+               ratingText.className = `badge ${rating.class}`;
+            }
+         });
+      });
+
+      // Form submission handler
+      form.addEventListener("submit", function (event) {
+         event.preventDefault();
+         event.stopPropagation();
+         console.log("Form submitted");
+
+         // Validate rating
+         const selectedRating = form.querySelector('input[name="rating"]:checked');
+         const ratingFeedback = document.getElementById("ratingFeedback");
+         let ratingValid = true;
+
+         if (!selectedRating) {
+            ratingFeedback.style.display = "block";
+            ratingValid = false;
+            console.log("Validation failed: No rating selected");
+         } else {
+            ratingFeedback.style.display = "none";
+            ratingValid = true;
+            console.log("Selected rating:", selectedRating.value);
+         }
+
+         // Validate other fields
+         form.classList.add("was-validated");
+         let allFieldsValid = true;
+         for (const fieldId in validationRules) {
+            const input = document.getElementById(fieldId);
+            const rules = validationRules[fieldId];
+            const isValid = validateInputField(input, rules, watchItems);
+            if (!isValid) allFieldsValid = false;
+         }
+
+         if (form.checkValidity() && ratingValid && allFieldsValid) {
+            // Gather form data
+            const title = document.getElementById("title").value.trim();
+            const url = document.getElementById("url").value.trim();
+            const creator = document.getElementById("creator").value.trim();
+            const comments = document.getElementById("comments").value.trim();
+            const rating = selectedRating.value;
+
+            const newItem = {
+               id: Date.now(),
+               title,
+               url,
+               creator,
+               platform: getDomainName(url),
+               rating,
+               comments,
+               dateAdded: new Date().toLocaleDateString(),
+            };
+
+            watchItems.push(newItem);
+            console.log("New item added:", newItem);
+            console.log("Total items:", watchItems.length);
+
+            updateWatchList();
+            updateStats();
+
+            form.reset();
+            form.classList.remove("was-validated");
+            ratingFeedback.style.display = "none";
+
+            // Reset rating indicator
+            ratingText.textContent = "";
+         } else {
+            console.log("Form validation failed");
+         }
+      }, false);
+
+      // Delete last item button
+      document.getElementById("deleteLastBtn").addEventListener("click", function () {
+         if (watchItems.length > 0) {
+            const removedItem = watchItems.pop();
+            console.log("Last item removed:", removedItem.title);
+            updateWatchList();
+            updateStats();
+         } else {
+            console.log("No items to remove");
+         }
+      });
+
+      // Search input & clear button event handlers
+      const searchInput = document.getElementById("searchInput");
+      const clearButton = document.getElementById("clearSearch");
+
+      searchInput.addEventListener("input", function () {
+         const searchTerm = searchInput.value.toLowerCase().trim();
+         filterWatchItems(searchTerm);
+
+         // Initial UI update
+         updateNoResultsMessage();
+      });
+
+      clearButton.addEventListener("click", function () {
+         searchInput.value = "";
+         filterWatchItems("");
+      });
+
+   });
+})();
