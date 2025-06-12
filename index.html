@@ -1,17 +1,153 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Gestionnaire de Films</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
-    
-
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="container py-5">
+      <!-- Header -->
+      <header class="mb-5 text-center">
+        <h1>Watch Later Manager</h1>
+      </header>
+      <div class="row">
+        <!-- Form Section -->
+        <div class="col-md-5 with-border">
+          <form id="watchLaterForm" class="needs-validation" novalidate>
+            <!-- Title -->
+            <div class="form-floating mb-3">
+              <input
+                type="text"
+                class="form-control"
+                id="title"
+                placeholder="Title"
+                required
+              />
+              <label for="title">Title</label>
+              <div class="valid-feedback">Looks good!</div>
+              <div class="invalid-feedback">Please provide a title.</div>
+            </div>
+            <!-- URL -->
+            <div class="form-floating mb-3">
+              <input
+                type="url"
+                class="form-control"
+                id="url"
+                placeholder="URL"
+                required
+              />
+              <label for="url">URL</label>
+              <div class="valid-feedback">Valid URL!</div>
+              <div class="invalid-feedback">Please provide a valid URL.</div>
+            </div>
+            <!-- Star Rating -->
+            <div class="mb-3">
+              <div class="d-flex align-items-center mb-3 gap-3">
+                <label class="form-label m-0">Rating</label>
+                <div class="rating d-flex gap-1">
+                  <input type="radio" name="rating" value="5" id="5" />
+                  <label for="5">☆</label>
+                  <input type="radio" name="rating" value="4" id="4" />
+                  <label for="4">☆</label>
+                  <input type="radio" name="rating" value="3" id="3" />
+                  <label for="3">☆</label>
+                  <input type="radio" name="rating" value="2" id="2" />
+                  <label for="2">☆</label>
+                  <input type="radio" name="rating" value="1" id="1" />
+                  <label for="1">☆</label>
+                </div>
+                <div class="rating-indicator">
+                  <span id="ratingText" class="badge badge-secondary"
+                    >Select a rating</span
+                  >
+                </div>
+              </div>
+              <div
+                class="invalid-feedback m-0"
+                id="ratingFeedback"
+                style="display: none"
+              >
+                Please select a rating.
+              </div>
+            </div>
+            <!-- Optional Fields Accordion -->
+            <div class="accordion mb-3" id="optionalFieldsAccordion">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#optionalFields"
+                    aria-expanded="false"
+                    aria-controls="optionalFields"
+                  >
+                    Optional Fields
+                  </button>
+                </h2>
+                <div
+                  id="optionalFields"
+                  class="accordion-collapse collapse"
+                  data-bs-parent="#optionalFieldsAccordion"
+                >
+                  <div class="accordion-body">
+                    <!-- Creator -->
+                    <div class="form-floating mb-3">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="creator"
+                        placeholder="Creator"
+                      />
+                      <label for="creator">Creator</label>
+                      <div class="valid-feedback">Looks good.</div>
+                    </div>
+                    <!-- Comments -->
+                    <div class="form-floating mb-3">
+                      <textarea
+                        class="form-control"
+                        id="comments"
+                        placeholder="Comments"
+                        style="height: 100px"
+                      ></textarea>
+                      <label for="comments">Comments</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Submit -->
+            <button type="submit" class="btn btn-primary w-100">
+              Add to Watch Later
+            </button>
+          </form>
+        </div>
+        <!-- Watch List Section -->
+        <div class="col-md-7 with-border">
+          <div class="mb-3 d-flex justify-content-between align-items-center">
+            <h2>Saved Items</h2>
+            <button id="deleteLastBtn" class="btn btn-danger btn-sm">
+              Delete Last
+            </button>
+          </div>
+          <ul id="watchList" class="list-group">
+            <li class="list-group-item text-muted">No items yet</li>
+          </ul>
+        </div>
+      </div>
+      <!-- Stats -->
+      <footer class="mt-5 text-center">
+        <div class="stats">
+          <p><strong>Total Saved:</strong> <span id="totalCount">0</span></p>
+        </div>
+      </footer>
+    </div>
     <script src="js/jquery-3.7.1.min.js"></script>
-    <script src="js/bootstrap.bundle.min.js"></script> 
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script></script>
     <script src="js/scripts.js"></script>
-</body>
+  </body>
 </html>
