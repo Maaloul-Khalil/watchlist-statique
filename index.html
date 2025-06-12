@@ -45,32 +45,74 @@
             </div>
             <!-- Star Rating -->
             <div class="mb-3">
-              <div class="d-flex align-items-center mb-3 gap-3">
-                <label class="form-label m-0">Rating</label>
-                <div class="rating d-flex gap-1">
-                  <input type="radio" name="rating" value="5" id="5" />
-                  <label for="5">☆</label>
-                  <input type="radio" name="rating" value="4" id="4" />
-                  <label for="4">☆</label>
-                  <input type="radio" name="rating" value="3" id="3" />
-                  <label for="3">☆</label>
-                  <input type="radio" name="rating" value="2" id="2" />
-                  <label for="2">☆</label>
-                  <input type="radio" name="rating" value="1" id="1" />
-                  <label for="1">☆</label>
+              <div class="row g-3 text-center justify-content-center">
+                <div class="col-12 col-lg-4 d-flex justify-content-center">
+                  <label class="form-label m-0">Rating</label>
                 </div>
-                <div class="rating-indicator">
-                  <span id="ratingText" class="badge badge-secondary"
-                    >Select a rating</span
-                  >
+                <!-- Rating Group: Stars + Indicator (always stacked) -->
+                <div class="col-12">
+                  <div class="row g-2 justify-content-center text-center">
+                    <!-- Stars -->
+                    <div class="col-12 d-flex justify-content-center">
+                      <div class="rating d-flex justify-content-center">
+                        <input
+                          type="radio"
+                          name="rating"
+                          value="5"
+                          id="star5"
+                        />
+                        <label for="star5">☆</label>
+                        <input
+                          type="radio"
+                          name="rating"
+                          value="4"
+                          id="star4"
+                        />
+                        <label for="star4">☆</label>
+                        <input
+                          type="radio"
+                          name="rating"
+                          value="3"
+                          id="star3"
+                        />
+                        <label for="star3">☆</label>
+                        <input
+                          type="radio"
+                          name="rating"
+                          value="2"
+                          id="star2"
+                        />
+                        <label for="star2">☆</label>
+                        <input
+                          type="radio"
+                          name="rating"
+                          value="1"
+                          id="star1"
+                        />
+                        <label for="star1">☆</label>
+                      </div>
+                    </div>
+                    <!-- Rating Indicator -->
+                    <div class="col-12 d-flex justify-content-center">
+                      <div class="rating-indicator">
+                        <span
+                          id="ratingText"
+                          class="badge badge-secondary"
+                        ></span>
+                      </div>
+                    </div>
+                    <!-- Validation Feedback -->
+                    <div class="col-12 text-center">
+                      <div
+                        class="invalid-feedback m-0"
+                        id="ratingFeedback"
+                        style="display: none"
+                      >
+                        Please select a rating.
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div
-                class="invalid-feedback m-0"
-                id="ratingFeedback"
-                style="display: none"
-              >
-                Please select a rating.
               </div>
             </div>
             <!-- Optional Fields Accordion -->
@@ -147,7 +189,6 @@
     </div>
     <script src="js/jquery-3.7.1.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
-    <script></script>
     <script src="js/scripts.js"></script>
   </body>
 </html>
