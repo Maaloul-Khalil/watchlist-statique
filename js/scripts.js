@@ -8,17 +8,24 @@ function escapeHtml(text) {
 }
 
 function getDomainName(url) {
+   if (!url || typeof url !== 'string') return 'Unknown';
+   const SHORT_DOMAINS = {
+      'youtu.be': 'youtube',
+      't.co': 'twitter',
+      'fb.me': 'facebook',
+   };
    try {
-      // Extract the domain name using regex
-      const match = url.match(/(?:https?:\/\/)?(?:www\.)?([a-zA-Z0-9-]+)(?:\..+)?\/?/);
-      if (match && match[1]) {
-         const domain = match[1];
-         // Capitalize the first letter and return
-         return domain.charAt(0).toUpperCase() + domain.slice(1);
+      const normalizedUrl = url.startsWith('http') ? url : `https://${url}`;
+      const {
+         hostname
+      } = new URL(normalizedUrl);
+      let domain = hostname.replace(/^www\./, '').split('.')[0];
+      if (SHORT_DOMAINS[hostname]) {
+         domain = SHORT_DOMAINS[hostname];
       }
-      return "Unknown";
+      return domain.charAt(0).toUpperCase() + domain.slice(1);
    } catch (e) {
-      return "Unknown";
+      return 'Unknown';
    }
 }
 
@@ -43,6 +50,59 @@ function getRatingBadgeClass(rating) {
    };
    return classes[rating] || "badge-secondary";
 }
+
+const validationRules = {
+   title: {
+      required: true,
+      maxLength: 30,
+      message: {
+         required: "Please provide a title.",
+         maxLength: "Title must not exceed 30 characters."
+      }
+   },
+   url: {
+      required: true,
+      pattern: /^https?:\/\/.+/,
+      unique: true,
+      message: {
+         required: "Please enter a URL.",
+         pattern: "URL must start with http:// or https://",
+         unique: "You already entered this URL."
+      }
+   },
+   // Add more inputs as needed
+};
+
+function validateInputField(input, rules, data = []) {
+   const value = input.value.trim();
+   const feedback = input.parentElement.querySelector(".invalid-feedback");
+
+   if (rules.required && !value) {
+      input.setCustomValidity(rules.message.required);
+      feedback.textContent = rules.message.required;
+      return false;
+   }
+
+   if (rules.maxLength && value.length > rules.maxLength) {
+      input.setCustomValidity(rules.message.maxLength);
+      feedback.textContent = rules.message.maxLength;
+      return false;
+   }
+
+   if (rules.pattern && !rules.pattern.test(value)) {
+      input.setCustomValidity(rules.message.pattern);
+      feedback.textContent = rules.message.pattern;
+      return false;
+   }
+   if (rules.unique && data.some(item => item.url === value)) {
+      input.setCustomValidity(rules.message.unique);
+      feedback.textContent = rules.message.unique;
+      return false;
+   }
+   input.setCustomValidity(""); // Clear previous errors
+   return true;
+}
+
 
 // Bootstrap custom client-side validation
 (function () {
@@ -113,8 +173,18 @@ function getRatingBadgeClass(rating) {
          // Always add was-validated class to show Bootstrap validation
          form.classList.add("was-validated");
 
+         let allFieldsValid = true;
+         for (const fieldId in validationRules) {
+            const input = document.getElementById(fieldId);
+            const rules = validationRules[fieldId];
+            const isValid = validateInputField(input, rules, watchItems);
+            if (!isValid) {
+               allFieldsValid = false;
+            }
+         }
+
          // Check if form is valid AND rating is selected
-         if (form.checkValidity() && ratingValid) {
+         if (form.checkValidity() && ratingValid && allFieldsValid) {
             // Get form data
             const title = document.getElementById("title").value.trim();
             const url = document.getElementById("url").value.trim();
@@ -210,7 +280,7 @@ function updateWatchList() {
       html += '<div class="rating-text">';
       html += '<i class="fas fa-star me-1"></i>';
       html += 'Rating: ' + starsHtml + ' ';
-      html += '<span class="badge ' + getRatingBadgeClass(item.rating) + ' ms-2">' + getRatingText(item.rating) + '</span>';
+      html += `<span class="badge ${getRatingBadgeClass(item.rating).replace('badge-', 'bg-')} text-white ms-2">${getRatingText(item.rating)}</span>`;
       html += '</div>';
       html += '<div class="date-text">';
       html += '<i class="fas fa-calendar-alt me-1"></i>';

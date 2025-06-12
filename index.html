@@ -3,19 +3,22 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Gestionnaire de Films</title>
+    <title>Gestionnaire de Films kasra</title>
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/all.min.css" />
   </head>
   <body>
-    <div class="container py-5">
+    <div class="container-fluid px-3 px-sm-4 px-md-5 mx-auto py-5">
       <!-- Header -->
-      <header class="mb-5 text-center">
-        <h1>Watch Later Manager</h1>
+      <header class="mb-4">
+        <h1 class="main-title">Watch Later Manager</h1>
       </header>
-      <div class="row">
+      <div class="row justify-content-center">
         <!-- Form Section -->
-        <div class="col-md-5 with-border">
+        <div class="col-md-4 form-container">
+          <h2 class="mb-4">Ajouter un Film</h2>
+          <!-- Client side validation-->
           <form id="watchLaterForm" class="needs-validation" novalidate>
             <!-- Title -->
             <div class="form-floating mb-3">
@@ -23,6 +26,7 @@
                 type="text"
                 class="form-control"
                 id="title"
+                name="title"
                 placeholder="Title"
                 required
               />
@@ -30,12 +34,14 @@
               <div class="valid-feedback">Looks good!</div>
               <div class="invalid-feedback">Please provide a title.</div>
             </div>
+
             <!-- URL -->
             <div class="form-floating mb-3">
               <input
                 type="url"
                 class="form-control"
                 id="url"
+                name="url"
                 placeholder="URL"
                 required
               />
@@ -43,16 +49,15 @@
               <div class="valid-feedback">Valid URL!</div>
               <div class="invalid-feedback">Please provide a valid URL.</div>
             </div>
+
             <!-- Star Rating -->
             <div class="mb-3">
               <div class="row g-3 text-center justify-content-center">
                 <div class="col-12 col-lg-4 d-flex justify-content-center">
                   <label class="form-label m-0">Rating</label>
                 </div>
-                <!-- Rating Group: Stars + Indicator (always stacked) -->
                 <div class="col-12">
                   <div class="row g-2 justify-content-center text-center">
-                    <!-- Stars -->
                     <div class="col-12 d-flex justify-content-center">
                       <div class="rating d-flex justify-content-center">
                         <input
@@ -60,6 +65,7 @@
                           name="rating"
                           value="5"
                           id="star5"
+                          required
                         />
                         <label for="star5">☆</label>
                         <input
@@ -92,7 +98,6 @@
                         <label for="star1">☆</label>
                       </div>
                     </div>
-                    <!-- Rating Indicator -->
                     <div class="col-12 d-flex justify-content-center">
                       <div class="rating-indicator">
                         <span
@@ -101,21 +106,24 @@
                         ></span>
                       </div>
                     </div>
-                    <!-- Validation Feedback -->
                     <div class="col-12 text-center">
-                      <div
-                        class="invalid-feedback m-0"
-                        id="ratingFeedback"
-                        style="display: none"
-                      >
+                      <div class="valid-feedback" id="ratingFeedback"></div>
+                      <div class="invalid-feedback" id="ratingFeedback"></div>
+                    </div>
+                    <!--
+                    <div class="col-12 text-center">
+                      <div class="valid-feedback" id="ratingFeedback">Looks good!</div>
+                      <div class="invalid-feedback" id="ratingFeedback">
                         Please select a rating.
                       </div>
                     </div>
+                    -->
                   </div>
                 </div>
               </div>
             </div>
-            <!-- Optional Fields Accordion -->
+
+            <!-- Optional Fields -->
             <div class="accordion mb-3" id="optionalFieldsAccordion">
               <div class="accordion-item">
                 <h2 class="accordion-header">
@@ -161,24 +169,23 @@
                 </div>
               </div>
             </div>
+
             <!-- Submit -->
             <button type="submit" class="btn btn-primary w-100">
               Add to Watch Later
             </button>
           </form>
         </div>
+
         <!-- Watch List Section -->
-        <div class="col-md-7 with-border">
+        <div class="col-md-7 movies-container">
           <div class="mb-3 d-flex justify-content-between align-items-center">
-            <h2>Saved Items</h2>
+            <h2 class="m-0">Saved Items</h2>
             <button id="deleteLastBtn" class="btn btn-danger btn-sm">
               Delete Last
             </button>
           </div>
-          <ul id="watchList" class="list-group">
-            <li class="list-group-item text-muted">No items yet</li>
-          </ul>
-        </div>
+            <ul id="watchList" class="list-group"></ul>
       </div>
       <!-- Stats -->
       <footer class="mt-5 text-center">
@@ -187,6 +194,7 @@
         </div>
       </footer>
     </div>
+
     <script src="js/jquery-3.7.1.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/scripts.js"></script>
