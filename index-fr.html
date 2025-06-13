@@ -52,7 +52,29 @@
                   <label for="url">URL</label>
                   <div class="valid-feedback">URL semble correcte!</div>
                   <div class="invalid-feedback">Veuillez fournir une URL valide.</div>
-               </div>
+                <button class="btn btn-outline-secondary" type="button" id="randomYoutubeBtn">Aléatoire</button>
+                  <script>
+                     document.getElementById('randomYoutubeBtn').addEventListener('click', function() {
+                         const videoIds = [
+                             'dQw4w9WgXcQ', // Rick Astley
+                             '9bZkp7q19f0', // Gangnam Style
+                             'kJQP7kiw5Fk', // Despacito
+                             'RgKAFK5djSk', // Shape of You
+                             'JGwWNGJdvx8', // See You Again
+                             'OPf0YbXqDm0', // Uptown Funk
+                             'KYniUCGPGLs', // Baby Shark
+                             'Ahha3Cqe_fk', // Sugar
+                             'nYh-n7EOtMA', // Blank Space
+                             'k2qgadSvNyU'  // Believer
+                         ];
+                     
+                         // Use Math.random to select a random video
+                         const randomIndex = Math.floor(Math.random() * videoIds.length);
+                         const randomId = videoIds[randomIndex];
+                         document.getElementById('url').value = `https://www.youtube.com/watch?v=${randomId}`;
+                     });
+                  </script>
+                </div>
                <!-- Star Rating -->
                <div class="mb-3">
                   <div class="row g-3 text-center justify-content-center">

@@ -383,6 +383,359 @@ body {
     transform: translateX(0);
   }
 }
+
+/* Small screens (tablets, 768px and up to 991px) */
+@media (max-width: 991px) {
+    #product-overview h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    #product-overview p {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+    }
+    
+    .form-container, .movies-container {
+        margin-bottom: 2rem;
+        padding: 1.5rem;
+    }
+    
+    .watch-item {
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+    
+    .watch-link {
+        font-size: 1rem;
+    }
+    
+    .rating-text, .platform-text, .date-text, .creator-text, .comments-text {
+        font-size: 0.9rem;
+        margin-bottom: 0.3rem;
+    }
+    
+    .watch-actions .btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .search-container .form-control {
+        font-size: 0.9rem;
+    }
+    
+    #floatingControls {
+        top: 15px;
+        right: 15px;
+    }
+    
+    #floatingControls .btn {
+        padding: 0.5rem 1rem;
+    }
+}
+
+/* Small screens (phones, 576px to 767px) */
+@media (max-width: 767px) {
+    .container-fluid {
+        padding: 1rem 2rem;
+    }
+    
+    #product-overview {
+        padding: 2rem 0;
+    }
+    
+    #product-overview h1 {
+        font-size: 2rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    #product-overview p {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .form-container, .movies-container {
+        margin: 10px 0;
+        padding: 1.5rem;
+        border-radius: 12px;
+    }
+    
+    .form-container h2, .movies-container h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .watch-item {
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border-radius: 10px;
+    }
+    
+    .watch-link {
+        font-size: 1rem;
+        line-height: 1.3;
+    }
+    
+    .rating-text, .platform-text, .date-text, .creator-text, .comments-text {
+        font-size: 0.85rem;
+        margin-bottom: 0.4rem;
+    }
+    
+    .watch-actions {
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 0.5rem;
+    }
+    
+    .watch-actions .btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.85rem;
+        margin-top: 0 !important;
+    }
+    
+    .watch-actions .badge {
+        margin: 0;
+        font-size: 0.8rem;
+    }
+    
+    .search-container {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+    
+    .mb-3.d-flex {
+        flex-direction: column;
+        align-items: stretch !important;
+        gap: 1rem;
+    }
+    
+    #deleteLastBtn {
+        align-self: flex-end;
+        width: auto;
+    }
+    
+    .form-floating .form-control {
+        padding: 1rem 0.75rem;
+        font-size: 0.9rem;
+    }
+    
+    .btn-primary {
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+    }
+    
+    .rating {
+        gap: 0.3rem;
+    }
+    
+    .rating label {
+        font-size: 1.5rem;
+    }
+    
+    #floatingControls {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        flex-direction: row;
+        gap: 0.5rem;
+    }
+    
+    #floatingControls .btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+    }
+    
+    footer {
+        margin-top: 3rem !important;
+        padding: 1.5rem;
+    }
+    
+    footer p {
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* Extra small screens (phones, less than 576px) */
+@media (max-width: 575px) {
+    body {
+        padding: 0;
+    }
+    
+    .container-fluid {
+        padding: 0.5rem 1rem;
+    }
+    
+    #product-overview {
+        padding: 1.5rem 0;
+    }
+    
+    #product-overview h1 {
+        font-size: 1.8rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    #product-overview p {
+        font-size: 0.95rem;
+        margin-bottom: 1rem;
+    }
+    
+    .form-container, .movies-container {
+        margin: 8px 0;
+        padding: 1rem;
+        border-radius: 10px;
+    }
+    
+    .form-container h2, .movies-container h2 {
+        font-size: 1.3rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    .watch-item {
+        padding: 0.8rem;
+        margin-bottom: 0.8rem;
+        border-radius: 8px;
+    }
+    
+    .watch-link {
+        font-size: 0.95rem;
+        line-height: 1.2;
+        word-break: break-word;
+    }
+    
+    .rating-text, .platform-text, .date-text, .creator-text, .comments-text {
+        font-size: 0.8rem;
+        margin-bottom: 0.3rem;
+        line-height: 1.3;
+    }
+    
+    .comments-text {
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+    
+    .watch-actions {
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 0.4rem;
+        margin-top: 0.5rem;
+    }
+    
+    .watch-actions .btn {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.8rem;
+        margin-top: 0 !important;
+        white-space: nowrap;
+    }
+    
+    .watch-actions .badge {
+        margin: 0;
+        font-size: 0.75rem;
+        padding: 0.3rem 0.5rem;
+    }
+    
+    .search-container {
+        width: 100%;
+        margin-bottom: 0.8rem;
+    }
+    
+    .search-container .form-control {
+        font-size: 0.85rem;
+        padding: 0.5rem;
+    }
+    
+    .search-container .btn {
+        padding: 0.5rem 0.7rem;
+    }
+    
+    .mb-3.d-flex {
+        flex-direction: column;
+        align-items: stretch !important;
+        gap: 0.8rem;
+    }
+    
+    #deleteLastBtn {
+        align-self: flex-end;
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+    
+    .form-floating .form-control {
+        padding: 0.9rem 0.6rem;
+        font-size: 0.85rem;
+    }
+    
+    .form-floating label {
+        font-size: 0.85rem;
+    }
+    
+    .btn-primary {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+    }
+    
+    .rating {
+        gap: 0.2rem;
+        justify-content: center;
+    }
+    
+    .rating label {
+        font-size: 1.3rem;
+    }
+    
+    .accordion-button {
+        padding: 0.7rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .accordion-body {
+        padding: 1rem;
+    }
+    
+    textarea.form-control {
+        min-height: 80px !important;
+    }
+    
+    #floatingControls {
+        position: fixed;
+        top: 8px;
+        right: 8px;
+        flex-direction: column;
+        gap: 0.3rem;
+    }
+    
+    #floatingControls .btn {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.8rem;
+        min-width: auto;
+    }
+    
+    footer {
+        margin-top: 2rem !important;
+        padding: 1rem;
+    }
+    
+    footer p {
+        font-size: 0.85rem;
+        margin-bottom: 0.4rem;
+        line-height: 1.4;
+    }
+    
+    footer a {
+        word-break: break-all;
+    }
+    
+    #noResults {
+        padding: 2rem 1rem !important;
+        font-size: 0.9rem;
+    }
+    
+    #totalCount {
+        font-weight: bold;
+        color: #0d6efd;
+    }
+}
+
 /* =====================
    Dark Theme
    ===================== */
