@@ -114,7 +114,9 @@ function updateWatchList() {
    }
 
    let html = "";
-   for (let i = 0; i < watchItems.length; i++) {
+   // for (let i = watchItems.length - 1; i >= 0; i--) {
+   // for (let i = 0; i < watchItems.length; i++)
+   for (let i = watchItems.length - 1; i >= 0; i--) {
       const item = watchItems[i];
       console.log("Processing item:", item.title);
 
@@ -128,31 +130,33 @@ function updateWatchList() {
          }
       }
 
-      html += '<div class="watch-item watch-slide-in" data-watch-id="' + item.id + '">';
-      html += '<div class="d-flex align-items-center justify-content-between">';
+      //html += '<div class="watch-item watch-slide-in " data-watch-id="' + item.id + '">';
+      html += '<div class="watch-item watch-slide-in ' + getRatingBadgeClass(item.rating).replace('badge-', 'border-') + '" data-watch-id="' + item.id + '">';
+      html += '<div class="d-flex justify-content-between">';
       html += '<div class="flex-grow-1">';
       html += '<div class="watch-info">';
       html += '<a href="' + item.url + '" target="_blank" class="watch-link">';
       html += '<i class="fas fa-external-link-alt me-2"></i>';
       html += escapeHtml(item.title);
       html += '</a>';
-      html += '<div class="creator-text">';
-      html += '<i class="fas fa-user-tie me-1"></i>';
-      html += 'Created by <strong>' + escapeHtml(item.creator || "Unknown") + '</strong>';
+      //html += `<span class="badge ${getRatingBadgeClass(item.rating).replace('badge-', 'bg-')} text-white ms-2">${getRatingText(item.rating)}</span>`;
+      html += '<div class="rating-text">';
+      html += '' + starsHtml + ' ';
       html += '</div>';
       html += '<div class="platform-text">';
       html += '<i class="fas fa-tv me-1"></i>';
       html += 'Platform: <strong>' + item.platform + '</strong>';
       html += '</div>';
-      html += '<div class="rating-text">';
-      html += '<i class="fas fa-star me-1"></i>';
-      html += 'Rating: ' + starsHtml + ' ';
-      html += `<span class="badge ${getRatingBadgeClass(item.rating).replace('badge-', 'bg-')} text-white ms-2">${getRatingText(item.rating)}</span>`;
-      html += '</div>';
       html += '<div class="date-text">';
       html += '<i class="fas fa-calendar-alt me-1"></i>';
       html += 'Added: <strong>' + item.dateAdded + '</strong>';
       html += '</div>';
+      if (item.creator) {
+              html += '<div class="creator-text">';
+      html += '<i class="fas fa-user-tie me-1"></i>';
+      html += 'Created by <strong>' + escapeHtml(item.creator) + '</strong>';
+      html += '</div>';
+      }
       if (item.comments) {
          html += '<div class="comments-text">';
          html += '<i class="fas fa-comment me-1"></i>';
@@ -162,8 +166,9 @@ function updateWatchList() {
       html += '</div>';
       html += '</div>';
       html += '<div class="watch-actions">';
-      html += '<span class="badge bg-secondary me-2">#' + (i + 1) + '</span>';
-      html += '<button class="btn btn-outline-danger btn-sm" onclick="removeItem(' + item.id + ')">';
+      html += `<span class="badge ${getRatingBadgeClass(item.rating).replace('badge-', 'bg-')} text-white ms-2">${getRatingText(item.rating)}</span>`;
+      // html += '<span class="badge bg-secondary me-2">#' + (i + 1) + '</span>';
+      html += '<button class="btn btn-outline-danger btn-lg position-relative" onclick="removeItem(' + item.id + ')" style="margin-top:90%;">';
       html += '<i class="fas fa-trash me-1"></i>Remove';
       html += '</button>';
       html += '</div>';
