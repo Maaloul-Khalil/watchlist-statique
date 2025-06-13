@@ -24,74 +24,39 @@ body {
 }
 
 #product-overview {
-  /* Full viewport width - breaks out of container constraints */
   width: 100vw;
   max-width: none;
-  
-  /* Alternative background options (commented out) */
-  /*background: linear-gradient(to top, rgba(80, 68, 18, 0.6) 10%, transparent), #ff1b68;*/
-  /*background:url("../images/inverted_seamless_patternCopy.png") center/cover no-repeat border-box;*/
-  
-  /* Active background: white overlay gradient + pattern image */
-  background: 
-    linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.8)), /* White overlay for readability */
-    url("../images/original_seamless_pattern.png") center/150% no-repeat border-box; /* Pattern image scaled to 150% */
- 
-  /* Base background color - shows through blend mode */
+  background: url("../images/original_seamless_pattern.png") center/150% no-repeat border-box;
   background-color: #a1d4dd;
-  /* Darken blend mode - makes final result darker than base color */
   background-blend-mode: darken;
-  
-  /* Alternative blend mode setup (commented out) */
-  /* background-color: rgba(255, 255, 255, 0.85);
-  background-blend-mode: lighten;*/
-  
-  /* Section spacing and alignment */
   padding: 3rem 1rem;
   text-align: center;
-  
-  /* Negative margins to break out of container padding */
-  /* Default: px-3 = 1rem padding */
   margin-left: calc(-1rem);
   margin-right: calc(-1rem);
 }
 
-/* Small screens and up (576px+) */
 @media (min-width: 576px) {
-  /* px-sm-4 = 1.5rem */
   #product-overview {
-    /* Increase background image size for larger screens */
     background-size: 200%;
-    /* Adjust negative margins to match container padding */
     margin-left: calc(-1.5rem);
     margin-right: calc(-1.5rem);
   }
 }
 
-/* Medium screens and up (768px+) */
 @media (min-width: 768px) {
-  /* px-md-5 = 3rem */
   #product-overview {
-    /* Further increase background image size */
     background-size: 300%;
-    /* Adjust negative margins to match container padding */
     margin-left: calc(-3rem);
     margin-right: calc(-3rem);
   }
 }
 
-/* Text styling for headings and paragraphs */
 #product-overview h1,
 #product-overview p {
-    font-size: 2rem;
-  /* Minimal vertical spacing between text elements */
+  font-size: 2rem;
   margin: 0.2rem 0;
-  /* White text for contrast */
   color: white;
-  /* Multi-layer text shadow for readability on complex backgrounds */
-  text-shadow: 
-    2px 2px 2px rgba(0, 0, 0, 0.7);      /* Dark drop shadow for depth */
-  /* Slightly bolder text for better visibility */
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.7);
   font-weight: 600;
 }
 
@@ -144,7 +109,6 @@ body {
   border-bottom: 2px solid #dee2e6;
 }
 
-/* Watch List Container - Scrollable */
 #watchList {
   flex: 1;
   overflow-y: auto;
@@ -156,7 +120,6 @@ body {
   max-height: calc(100vh - 120px);
 }
 
-/*Empty state styling*/
 #watchList:empty {
   display: block;
   text-align: center;
@@ -166,13 +129,19 @@ body {
 }
 
 #watchList:empty::before {
-  content: "No movies added.\A Start by adding your first video!";
+  /*content: "No movies added.\A Start by adding your first video!";*/
   font-size: 1.4rem;
   white-space: pre-line;
   display: block;
   color: #666;
   padding: 1rem;
   font-style: italic;
+}
+:lang(en) #watchList:empty::before {
+  content: "No movies added.\A Start by adding your first video!";
+}
+:lang(fr) #watchList:empty::before {
+  content: "Aucun film ajouté.\A Commencez par ajouter votre première vidéo !";
 }
 /* =====================
    Watch Item Styles
@@ -231,10 +200,9 @@ body {
   display: flex;
   align-items: center;
 }
-
-.watch-link:hover {
-  color: #0b5ed7;
-  text-decoration: underline;
+.watch-link:hover,
+.watch-link:visited {
+  text-decoration: none;
 }
 
 /* Info text styling */
@@ -283,13 +251,22 @@ body {
 }
 
 /* Remove button styling */
-.watch-actions .btn {
-  white-space: nowrap;
-  transition: all 0.2s ease;
+.watch-actions .btn-outline-danger {
+  cursor: pointer;
+  transition: all 0.15s ease; /* One transition for all properties */
 }
 
-.watch-actions .btn:hover {
+.watch-actions .btn-outline-danger:hover {
   transform: scale(1.05);
+}
+
+.watch-actions .btn-outline-danger:active {
+  transform: scale(0.98);
+}
+
+.watch-actions .btn-outline-danger:focus {
+  transform: scale(1.03);
+  box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25); /* Keep Bootstrap's focus ring */
 }
 
 /* =====================
@@ -405,4 +382,106 @@ body {
     opacity: 1;
     transform: translateX(0);
   }
+}
+/* =====================
+   Dark Theme
+   ===================== */
+
+.dark-theme {
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  color: #ecf0f1;
+}
+.dark-theme .form-container,
+.dark-theme .movies-container {
+  background: rgba(44, 62, 80, 0.9);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ecf0f1;
+}
+
+.dark-theme #product-overview {
+    background: url("../images/inverted_seamless_pattern - Copy.png") center/150% no-repeat border-box;
+  background-color: #a1d4dd;
+  background-blend-mode: darken;
+}
+
+.dark-theme .form-control, 
+.dark-theme #search-container input, 
+.dark-theme .input-group-text {
+  background: rgba(52, 73, 94, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #bdc3c7;
+}
+
+.dark-theme .watch-link{
+    color: azure;
+} 
+
+.dark-theme .creator-text,
+.dark-theme .platform-text,
+.dark-theme .rating-text,
+.dark-theme .date-text,
+.dark-theme .comments-text {
+  color: #bdc3c7;
+}
+
+.dark-theme .rating-text {
+  color: #ecf0f1;
+}
+
+.dark-theme .creator-text strong,
+.dark-theme .platform-text strong,
+.dark-theme .date-text strong {
+  color: #ecf0f1;
+}
+
+/* Dark theme for rating badge */
+.dark-theme .rating-text .badge {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ecf0f1;
+}
+/* Dark theme for item number badge */
+.dark-theme .watch-actions .badge {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ecf0f1;
+}
+
+.dark-theme .accordion-button {
+  background-color: rgba(52, 73, 94, 0.9);
+  color: #ecf0f1;
+}
+
+.dark-theme .accordion-button:not(.collapsed) {
+  background-color: rgba(41, 61, 81, 0.9);
+  color: #ffffff;
+}
+
+.dark-theme .accordion-button:focus {
+  box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
+  border-color: #3498db;
+}
+.dark-theme textarea,
+.dark-theme #watchLaterForm input  {
+  background: rgba(52, 73, 94, 0.9);
+  border-color: #3498db;
+  color: #ecf0f1;
+}
+
+.dark-theme .rating-indicator > span {
+  color: #ecf0f1 !important;
+}
+.dark-theme .movies-container .mb-3 {
+  background: rgba(44, 62, 80, 0.9);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+.dark-theme #search-container {
+  background: rgba(44, 62, 80, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.dark-theme #watchList:empty::before {
+  color: #bdc3c7;
+}
+.dark-theme .watch-item {
+  background: linear-gradient(to right, #4e54c8, #8f94fb);
+  color: white
 }

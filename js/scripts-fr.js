@@ -389,21 +389,19 @@ function filterWatchItems(searchTerm) {
    function addFloatingControls() {
     // Determine current language based on page URL
     const isfrench = window.location.pathname.includes('-fr');
-    
+    // Choose the opposite language for the button label
+    const langButtonLabel = isfrench ? 'English' : 'Français';
     // Create controls HTML
     const controls = `
-    <div id="floatingControls" class="d-flex flex-md-row flex-column gap-2 position-fixed" 
-         style="top: 20px; right: 20px; z-index: 1000;">
-
-        <button id="themeToggle" class="btn btn-secondary w-auto">
-            <i class="fas fa-moon"></i>
-        </button>
-        
-        <button id="langSwitch" class="btn btn-primary w-auto">
-            ${isfrench ? 'Français' : 'English'}
-        </button>
-
-    </div>
+        <div id="floatingControls" class="d-flex flex-md-row flex-column gap-2 position-fixed" 
+             style="top: 20px; right: 20px; z-index: 1000;">
+            <button id="themeToggle" class="btn btn-secondary w-auto">
+                <i class="fas fa-moon"></i>
+            </button>
+            <button id="langSwitch" class="btn btn-primary w-auto">
+                ${langButtonLabel}
+            </button>
+        </div>
     `;
 
     $('body').append(controls);
