@@ -31,11 +31,11 @@ function getDomainName(url) {
 
 function getRatingText(rating) {
    const texts = {
-      5: "Must Watch",
-      4: "Recommended",
-      3: "Decent",
-      2: "Meh",
-      1: "Skip",
+      5: "À ne pas rater",
+      4: "Recommandé",
+      3: "Passable",
+      2: "ok",
+      1: "Nul",
    };
    return texts[rating] || "Unknown";
 }
@@ -56,8 +56,8 @@ const validationRules = {
       required: true,
       maxLength: 30,
       message: {
-         required: "Please provide a title.",
-         maxLength: "Title must not exceed 30 characters."
+         required: "Veuillez fournir un titre.",
+         maxLength: "Le titre ne doit pas dépasser 30 caractères."
       }
    },
    url: {
@@ -65,9 +65,9 @@ const validationRules = {
       pattern: /^https?:\/\/.+/,
       unique: true,
       message: {
-         required: "Please enter a URL.",
-         pattern: "URL must start with http:// or https://",
-         unique: "You already entered this URL."
+         required: "Veuillez saisir une URL.",
+         pattern: "L'URL doit commencer par http:// ou https://",
+         unique: "Vous avez déjà saisi cette URL."
       }
    },
    // Add more inputs as needed
@@ -145,16 +145,16 @@ function updateWatchList() {
       html += '</div>';
       html += '<div class="platform-text">';
       html += '<i class="fas fa-tv me-1"></i>';
-      html += 'Platform: <strong>' + item.platform + '</strong>';
+      html += 'Plateforme: <strong>' + item.platform + '</strong>';
       html += '</div>';
       html += '<div class="date-text">';
       html += '<i class="fas fa-calendar-alt me-1"></i>';
-      html += 'Added: <strong>' + item.dateAdded + '</strong>';
+      html += 'Ajouté: <strong>' + item.dateAdded + '</strong>';
       html += '</div>';
       if (item.creator) {
               html += '<div class="creator-text">';
       html += '<i class="fas fa-user-tie me-1"></i>';
-      html += 'Created by <strong>' + escapeHtml(item.creator) + '</strong>';
+      html += 'Créé par <strong>' + escapeHtml(item.creator) + '</strong>';
       html += '</div>';
       }
       if (item.comments) {
@@ -169,7 +169,7 @@ function updateWatchList() {
       html += `<span class="badge ${getRatingBadgeClass(item.rating).replace('badge-', 'bg-')} text-white ms-2">${getRatingText(item.rating)}</span>`;
       // html += '<span class="badge bg-secondary me-2">#' + (i + 1) + '</span>';
       html += '<button class="btn btn-outline-danger btn-lg position-relative" onclick="removeItem(' + item.id + ')" style="margin-top:90%;">';
-      html += '<i class="fas fa-trash me-1"></i>Remove';
+      html += '<i class="fas fa-trash me-1"></i>Supprimer';
       html += '</button>';
       html += '</div>';
       html += '</div>';
@@ -254,23 +254,23 @@ function filterWatchItems(searchTerm) {
       const ratingText = document.getElementById("ratingText");
       const ratingTexts = {
          5: {
-            text: "Must Watch",
+            text: "À ne pas rater",
             class: "badge-success"
          },
          4: {
-            text: "Recommended",
+            text: "Recommandé",
             class: "badge-primary"
          },
          3: {
-            text: "Decent",
+            text: "Passable",
             class: "badge-info"
          },
          2: {
-            text: "Meh",
+            text: "ok",
             class: "badge-warning"
          },
          1: {
-            text: "Skip",
+            text: "Nul",
             class: "badge-danger"
          },
       };

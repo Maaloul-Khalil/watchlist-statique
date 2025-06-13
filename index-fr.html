@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
    <head>
       <meta charset="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -15,14 +15,14 @@
          <h1 class="main-title">Watch Later Manager</h1>
       </header>-->
       <section id="product-overview" class="d-flex flex-column justify-content-center align-items-center text-center text-white">
-    <h1 >Watch Later Manager</h1>
-    <p>Save videos to your watchlist and easily find them</p>
+    <h1>Watch Later Manager</h1>
+    <p>Enregistrez vos vidéos dans le Watchlist et retrouvez-les facilement</p>
         </section>
 
       <div class="row justify-content-center">
          <!-- Form Section -->
          <div class="col-md-4 form-container">
-            <h2 class="mb-4">Add a video</h2>
+            <h2 class="mb-4">Ajouter une vidéo</h2>
             <!-- Client side validation-->
             <form id="watchLaterForm" class="needs-validation" novalidate>
                <!-- Title -->
@@ -32,12 +32,12 @@
                      class="form-control"
                      id="title"
                      name="title"
-                     placeholder="Title"
+                     placeholder="Titre"
                      required
                      />
-                  <label for="title">Title</label>
-                  <div class="valid-feedback">Looks good!</div>
-                  <div class="invalid-feedback">Please provide a title.</div>
+                  <label for="title">Titre</label>
+                  <div class="valid-feedback">L'entrée semble correcte!</div>
+                  <div class="invalid-feedback">Veuillez fournir un titre.</div>
                </div>
                <!-- URL -->
                <div class="form-floating mb-3">
@@ -50,14 +50,14 @@
                      required
                      />
                   <label for="url">URL</label>
-                  <div class="valid-feedback">Valid URL!</div>
-                  <div class="invalid-feedback">Please provide a valid URL.</div>
+                  <div class="valid-feedback">URL semble correcte!</div>
+                  <div class="invalid-feedback">Veuillez fournir une URL valide.</div>
                </div>
                <!-- Star Rating -->
                <div class="mb-3">
                   <div class="row g-3 text-center justify-content-center">
                      <div class="col-12 col-lg-4 d-flex justify-content-center">
-                        <label class="form-label m-0">Rating</label>
+                        <label class="form-label m-0">Note</label>
                      </div>
                      <div class="col-12">
                         <div class="row g-2 justify-content-center text-center">
@@ -137,7 +137,7 @@
                            aria-expanded="false"
                            aria-controls="optionalFields"
                            >
-                        Optional Fields
+                        Informations facultatives
                         </button>
                      </h2>
                      <div
@@ -154,8 +154,8 @@
                                  id="creator"
                                  placeholder="Creator"
                                  />
-                              <label for="creator">Creator</label>
-                              <div class="valid-feedback">Looks good.</div>
+                              <label for="creator">Créateur</label>
+                              <div class="valid-feedback">semble correcte!</div>
                            </div>
                            <!-- Comments -->
                            <div class="form-floating mb-3">
@@ -165,7 +165,7 @@
                                  placeholder="Comments"
                                  style="height: 100px"
                                  ></textarea>
-                              <label for="comments">Comments</label>
+                              <label for="comments">Commentaires</label>
                            </div>
                         </div>
                      </div>
@@ -173,20 +173,20 @@
                </div>
                <!-- Submit -->
                <button type="submit" class="btn btn-primary w-100">
-               Add to queue
+               Ajouter à la Watchlist
                </button>
             </form>
          </div>
          <!-- Watch List Section -->
          <div class="col-md-7 movies-container">
             <div class="mb-3 d-flex justify-content-between align-items-center">
-               <h2 class="m-0">Saved videos</h2>
+               <h2 class="m-0">Vidéos enregistrées</h2>
                <div class="search-container">
                   <div class="input-group">
                      <span class="input-group-text">
                      <i class="fas fa-search"></i>
                      </span>
-                     <input type="text" class="form-control form-input" id="searchInput" placeholder="Search for a video">
+                     <input type="text" class="form-control form-input" id="searchInput" placeholder="Rechercher une vidéo">
                      <button class="btn btn-outline-secondary" type="button" id="clearSearch">
                      <i class="fas fa-times"></i>
                      </button>
@@ -198,19 +198,19 @@
             </div>
             <div id="watchList" class="list-group"></div>
             <div id="noResults" style="display: none; text-align: center; color: #777; padding: 1rem;">
-               no results found
+               aucun résultat trouvé
             </div>
          </div>
          <!-- Stats -->
          <footer class="mt-5 text-center">
             <div class="stats">
-               <p><strong>Total Saved:</strong> <span id="totalCount">0</span></p>
+               <p><strong>Total enregistré :</strong> <span id="totalCount">0</span></p>
             </div>
          </footer>
       </div>
       <script src="js/jquery-3.7.1.min.js"></script>
       <script src="js/bootstrap.bundle.min.js"></script>
-      <script src="js/scripts.js"></script>
+      <script src="js/scripts-fr.js"></script>
       <script></script>
    </body>
 </html>
