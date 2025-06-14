@@ -2,9 +2,7 @@ let watchItems = [];
 
 // Escape HTML to prevent XSS
 function escapeHtml(text) {
-   const div = document.createElement("div");
-   div.textContent = text;
-   return div.innerHTML;
+   return $('<div>').text(text).html();
 }
 
 function getDomainName(url) {
@@ -74,29 +72,30 @@ const validationRules = {
 };
 
 function validateInputField(input, rules, data = []) {
-   const value = input.value.trim();
-   const feedback = input.parentElement.querySelector(".invalid-feedback");
+   const $input = $(input);
+   const value = $input.val().trim();
+   const $feedback = $input.parent().find(".invalid-feedback");
 
    if (rules.required && !value) {
       input.setCustomValidity(rules.message.required);
-      feedback.textContent = rules.message.required;
+      $feedback.text(rules.message.required);
       return false;
    }
 
    if (rules.maxLength && value.length > rules.maxLength) {
       input.setCustomValidity(rules.message.maxLength);
-      feedback.textContent = rules.message.maxLength;
+      $feedback.text(rules.message.maxLength);
       return false;
    }
 
    if (rules.pattern && !rules.pattern.test(value)) {
       input.setCustomValidity(rules.message.pattern);
-      feedback.textContent = rules.message.pattern;
+      $feedback.text(rules.message.pattern);
       return false;
    }
    if (rules.unique && data.some(item => item.url === value)) {
       input.setCustomValidity(rules.message.unique);
-      feedback.textContent = rules.message.unique;
+      $feedback.text(rules.message.unique);
       return false;
    }
    input.setCustomValidity(""); // Clear previous errors
@@ -105,15 +104,15 @@ function validateInputField(input, rules, data = []) {
 
 // Update watch list display
 function updateWatchList() {
-   const watchList = document.getElementById("watchList");
+   const $watchList = $("#watchList");
    console.log("Updating watch list with", watchItems.length, "items");
 
    if (watchItems.length === 0) {
-      watchList.innerHTML = '';
+      $watchList.html('');
       return;
    }
 
-   let html = "";
+  let html = "";
    // for (let i = watchItems.length - 1; i >= 0; i--) {
    // for (let i = 0; i < watchItems.length; i++)
    for (let i = watchItems.length - 1; i >= 0; i--) {
@@ -176,7 +175,7 @@ function updateWatchList() {
       html += '</div>';
    }
 
-   watchList.innerHTML = html;
+   $watchList.html(html);
    console.log("Watch list updated successfully");
 }
 
@@ -201,240 +200,211 @@ function removeItem(id) {
 // Update stats
 function updateStats() {
    const count = watchItems.length;
-   document.getElementById("totalCount").textContent = count;
+   $("#totalCount").text(count);
    console.log("Stats updated - Total count:", count);
 }
 
 // Show or hide "No results" message based on visible items
 function updateNoResultsMessage() {
-   const items = document.querySelectorAll("#watchList .watch-item");
+  const $items = $("#watchList .watch-item");
+  const visibleItems = $items.filter(function () {
+    return $(this).is(":visible");
+  });
 
-   // Filter visible items
-   const visibleItems = Array.from(items).filter(item =>
-      window.getComputedStyle(item).display !== "none"
-   );
+  const $watchList = $("#watchList");
+  const $noResultsEl = $("#noResults");
+  const searchTerm = $("#searchInput").val().trim();
 
-   const watchList = document.getElementById("watchList");
-   const noResultsEl = document.getElementById("noResults");
-
-   if (visibleItems.length === 0) {
-      watchList.style.display = "none";
-      noResultsEl.style.display = "block";
-   } else {
-      watchList.style.display = "block";
-      noResultsEl.style.display = "none";
-   }
+  // Only show "No results" if there's an active search with no matches
+  if (searchTerm !== "" && visibleItems.length === 0 && $items.length > 0) {
+    $watchList.hide();
+    $noResultsEl.show();
+  } else {
+    $watchList.show();
+    $noResultsEl.hide();
+  }
 }
-
 
 // Filter watch items by search term
 function filterWatchItems(searchTerm) {
-   const items = document.querySelectorAll(".watch-item");
-   items.forEach(item => {
-      const title = item.querySelector(".watch-link")?.textContent.trim().toLowerCase() || "";
-      if (title.startsWith(searchTerm)) {
-         item.style.display = "block";
-      } else {
-         item.style.display = "none";
-      }
-   });
-   updateNoResultsMessage();
+  const term = searchTerm.toLowerCase().trim();
+
+  if (term === "") {
+   console.log("No search term provided, showing all items");
+   $(".watch-item").show();
+   $("#watchList").show();
+   $("#noResults").hide(); // Always hide when search is empty
+    return;
+  }
+
+  $(".watch-item").each(function () {
+    const title = $(this).find(".watch-link").text().toLowerCase().trim();
+    const matches = title.startsWith(term);
+    $(this).toggle(matches);
+  });
+
+  updateNoResultsMessage();
 }
 
-// Initialize event listeners on DOM content loaded
+function getFormattedDate() {
+  const now = new Date();
+  const pad = (n) => String(n).padStart(2, "0");
+  
+  const month = pad(now.getMonth() + 1);
+  const day = pad(now.getDate());
+  const hours = pad(now.getHours());
+  const minutes = pad(now.getMinutes());
+  
+  return `${month}/${day} à ${hours}:${minutes}`;
+}
+
 (function () {
-   "use strict";
+  "use strict";
 
-   document.addEventListener('DOMContentLoaded', function () {
-      const form = document.querySelector("#watchLaterForm");
-      console.log("Watch Later Manager initialized");
+  $(document).ready(() => {
+    const $form = $("#watchLaterForm");
+    console.log("Watch Later Manager initialized (FR)");
+    const ratingTexts = {
+      5: { text: "À ne pas rater", class: "badge-success" },
+      4: { text: "Recommandé", class: "badge-primary" },
+      3: { text: "Passable", class: "badge-info" },
+      2: { text: "Ok", class: "badge-warning" },
+      1: { text: "Nul", class: "badge-danger" },
+    };
 
-      // Rating indicator functionality
-      const ratingInputs = document.querySelectorAll('input[name="rating"]');
-      const ratingText = document.getElementById("ratingText");
-      const ratingTexts = {
-         5: {
-            text: "À ne pas rater",
-            class: "badge-success"
-         },
-         4: {
-            text: "Recommandé",
-            class: "badge-primary"
-         },
-         3: {
-            text: "Passable",
-            class: "badge-info"
-         },
-         2: {
-            text: "ok",
-            class: "badge-warning"
-         },
-         1: {
-            text: "Nul",
-            class: "badge-danger"
-         },
-      };
+    const $ratingText = $("#ratingText");
 
-      ratingInputs.forEach((input) => {
-         input.addEventListener("change", function () {
-            if (this.checked) {
-               const rating = ratingTexts[this.value];
-               ratingText.textContent = rating.text;
-               ratingText.className = `badge ${rating.class}`;
-            }
-         });
-      });
+    $('input[name="rating"]').on("change", function () {
+      if (this.checked) {
+        const rating = ratingTexts[this.value];
+        $ratingText.text(rating.text).attr("class", `badge ${rating.class}`);
+      }
+    });
 
-      // Form submission handler
-      form.addEventListener("submit", function (event) {
-         event.preventDefault();
-         event.stopPropagation();
-         console.log("Form submitted");
+    $form.on("submit", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
 
-         // Validate rating
-         const selectedRating = form.querySelector('input[name="rating"]:checked');
-         const ratingFeedback = document.getElementById("ratingFeedback");
-         let ratingValid = true;
+      const selectedRating = $form.find('input[name="rating"]:checked')[0];
+      const $ratingFeedback = $("#ratingFeedback");
+      let ratingValid = true;
 
-         if (!selectedRating) {
-            ratingFeedback.style.display = "block";
-            ratingValid = false;
-            console.log("Validation failed: No rating selected");
-         } else {
-            ratingFeedback.style.display = "none";
-            ratingValid = true;
-            console.log("Selected rating:", selectedRating.value);
-         }
+      if (!selectedRating) {
+        $ratingFeedback.show();
+        ratingValid = false;
+        console.warn("Validation failed: No rating selected");
+      } else {
+        $ratingFeedback.hide();
+        console.log("Selected rating:", selectedRating.value);
+      }
 
-         // Validate other fields
-         form.classList.add("was-validated");
-         let allFieldsValid = true;
-         for (const fieldId in validationRules) {
-            const input = document.getElementById(fieldId);
-            const rules = validationRules[fieldId];
-            const isValid = validateInputField(input, rules, watchItems);
-            if (!isValid) allFieldsValid = false;
-         }
+      $form.addClass("was-validated");
 
-         if (form.checkValidity() && ratingValid && allFieldsValid) {
-            // Gather form data
-            const title = document.getElementById("title").value.trim();
-            const url = document.getElementById("url").value.trim();
-            const creator = document.getElementById("creator").value.trim();
-            const comments = document.getElementById("comments").value.trim();
-            const rating = selectedRating.value;
+      let allFieldsValid = true;
+      for (const fieldId in validationRules) {
+        const $input = $(`#${fieldId}`);
+        const rules = validationRules[fieldId];
+        const isValid = validateInputField($input[0], rules, watchItems);
+        if (!isValid) allFieldsValid = false;
+      }
 
-            const newItem = {
-               id: Date.now(),
-               title,
-               url,
-               creator,
-               platform: getDomainName(url),
-               rating,
-               comments,
-               //dateAdded: new Date().toLocaleDateString(),
-               // mm/dd at hh/mm
-               dateAdded: `${String(new Date().getMonth()+1).padStart(2,'0')}/${String(new Date().getDate()).padStart(2,'0')} at ${String(new Date().getHours()).padStart(2,'0')}:${String(new Date().getMinutes()).padStart(2,'0')}`
+      if ($form[0].checkValidity() && ratingValid && allFieldsValid) {
+        const getVal = (id) => $(`#${id}`).val().trim();
+        const dateAdded = getFormattedDate();
 
-            };
+        const newItem = {
+          id: Date.now(),
+          title: getVal("title"),
+          url: getVal("url"),
+          creator: getVal("creator"),
+          platform: getDomainName(getVal("url")),
+          rating: selectedRating.value,
+          comments: getVal("comments"),
+          dateAdded,
+        };
 
-            watchItems.push(newItem);
-            console.log("New item added:", newItem);
-            console.log("Total items:", watchItems.length);
+        watchItems.push(newItem);
+        console.log("New item added:", newItem);
+        console.log("Total items:", watchItems.length);
 
-            updateWatchList();
-            updateStats();
+        updateWatchList();
+        updateStats();
 
-            form.reset();
-            form.classList.remove("was-validated");
-            ratingFeedback.style.display = "none";
+        $form[0].reset();
+        $form.removeClass("was-validated");
+        $ratingFeedback.hide();
+        $ratingText.text("");
+      } else {
+        console.warn("Form validation failed");
+      }
+    });
 
-            // Reset rating indicator
-            ratingText.textContent = "";
-         } else {
-            console.log("Form validation failed");
-         }
-      }, false);
+    $("#deleteLastBtn").on("click", () => {
+      if (watchItems.length > 0) {
+        const removedItem = watchItems.pop();
+        console.log("Last item removed:", removedItem.title);
+        updateWatchList();
+        updateStats();
+      } else {
+        console.log("No items to remove");
+      }
+    });
 
-      // Delete last item button
-      document.getElementById("deleteLastBtn").addEventListener("click", function () {
-         if (watchItems.length > 0) {
-            const removedItem = watchItems.pop();
-            console.log("Last item removed:", removedItem.title);
-            updateWatchList();
-            updateStats();
-         } else {
-            console.log("No items to remove");
-         }
-      });
+    const $searchInput = $("#searchInput");
+    const $clearButton = $("#clearSearch");
 
-      // Search input & clear button event handlers
-      const searchInput = document.getElementById("searchInput");
-      const clearButton = document.getElementById("clearSearch");
+    $searchInput.on("input", () => {
+        const rawValue = $searchInput.val();
+        console.log("Search input changed:", rawValue);
+        const searchTerm = $searchInput.val().toLowerCase().trim();
 
-      searchInput.addEventListener("input", function () {
-         const searchTerm = searchInput.value.toLowerCase().trim();
-         filterWatchItems(searchTerm);
+        filterWatchItems(searchTerm);
+        updateNoResultsMessage();
+    });
 
-         // Initial UI update
-         updateNoResultsMessage();
-      });
+    $clearButton.on("click", () => {
+      $searchInput.val("");
+      filterWatchItems("");
+      $("#watchList").css("display", "");
+      $("#noResults").css("display", "none");
+    });
+  });
 
-      clearButton.addEventListener("click", function () {
-         searchInput.value = "";
-         filterWatchItems("");
-      });
+  function addFloatingControls() {
+    const isFrench = window.location.pathname.includes("-fr");
+    const langButtonLabel = isFrench ? "English" : "Français";
 
-   });
-   function addFloatingControls() {
-    // Determine current language based on page URL
-    const isfrench = window.location.pathname.includes('-fr');
-    // Choose the opposite language for the button label
-    const langButtonLabel = isfrench ? 'English' : 'Français';
-    // Create controls HTML
     const controls = `
-        <div id="floatingControls" class="d-flex flex-md-row flex-column gap-2 position-fixed" 
-             style="top: 20px; right: 20px; z-index: 1000;">
-            <button id="themeToggle" class="btn btn-secondary w-auto">
-                <i class="fas fa-moon"></i>
-            </button>
-            <button id="langSwitch" class="btn btn-primary w-auto">
-                ${langButtonLabel}
-            </button>
-        </div>
+      <div id="floatingControls" class="d-flex flex-md-row flex-column gap-2 position-fixed" 
+           style="top: 20px; right: 20px; z-index: 1000;">
+        <button id="themeToggle" class="btn btn-secondary w-auto">
+          <i class="fas fa-moon"></i>
+        </button>
+        <button id="langSwitch" class="btn btn-primary w-auto">
+          ${langButtonLabel}
+        </button>
+      </div>
     `;
 
-    $('body').append(controls);
+    $("body").append(controls);
 
-    // Theme toggle functionality
-    $('#themeToggle').on('click', function() {
-        $('body').toggleClass('dark-theme');
-        const isDark = $('body').hasClass('dark-theme');
-        $(this).html(`<i class="fas fa-${isDark ? 'sun' : 'moon'}"></i>`);
-        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    $("#themeToggle").on("click", function () {
+      $("body").toggleClass("dark-theme");
+      const isDark = $("body").hasClass("dark-theme");
+      $(this).html(`<i class="fas fa-${isDark ? "sun" : "moon"}"></i>`);
+      localStorage.setItem("theme", isDark ? "dark" : "light");
     });
 
-    // Load saved theme
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        $('body').addClass('dark-theme');
-        $('#themeToggle').html('<i class="fas fa-sun"></i>');
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") {
+      $("body").addClass("dark-theme");
+      $("#themeToggle").html('<i class="fas fa-sun"></i>');
     }
 
-    // Language switch button click event - simple redirect
-    $('#langSwitch').on('click', function() {
-        if (isfrench) {
-            // Switch from French to English
-            window.location.href = 'index.html';
-        } else {
-            // Switch from English to French
-            window.location.href = 'index-fr.html';
-        }
+    $("#langSwitch").on("click", () => {
+      window.location.href = isFrench ? "index.html" : "index-fr.html";
     });
-}
+  }
 
-// Initialize everything
-setTimeout(() => {
-    addFloatingControls();
-}, 500);
+  setTimeout(addFloatingControls, 500);
 })();
