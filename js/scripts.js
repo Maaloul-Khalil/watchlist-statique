@@ -1,5 +1,30 @@
 let watchItems = [];
 
+// Storage functions
+function saveToStorage() {
+  try {
+    localStorage.setItem('watchItems', JSON.stringify(watchItems));
+    console.log('Watch items saved to localStorage');
+  } catch (error) {
+    console.warn('Could not save to localStorage:', error);
+  }
+}
+
+function loadFromStorage() {
+  try {
+    const stored = localStorage.getItem('watchItems');
+    if (stored) {
+      watchItems = JSON.parse(stored);
+      console.log('Loaded', watchItems.length, 'items from localStorage');
+      updateWatchList();
+      updateStats();
+    }
+  } catch (error) {
+    console.warn('Could not load from localStorage:', error);
+    watchItems = [];
+  }
+}
+
 // Escape HTML to prevent XSS
 function escapeHtml(text) {
    return $('<div>').text(text).html();
@@ -193,6 +218,7 @@ function removeItem(id) {
 
    watchItems = newWatchItems;
    console.log("Items removed:", originalLength - watchItems.length);
+   saveToStorage(); // Save after removing
    updateWatchList();
    updateStats();
 }
@@ -262,6 +288,9 @@ function getFormattedDate() {
   "use strict";
 
   $(document).ready(() => {
+   // Load saved items on page load
+    loadFromStorage();
+
     const $form = $("#watchLaterForm");
     console.log("Watch Later Manager initialized");
 
@@ -325,6 +354,7 @@ function getFormattedDate() {
         };
 
         watchItems.push(newItem);
+        saveToStorage(); // Save after adding new item
         console.log("New item added:", newItem);
         console.log("Total items:", watchItems.length);
 
@@ -343,6 +373,7 @@ function getFormattedDate() {
     $("#deleteLastBtn").on("click", () => {
       if (watchItems.length > 0) {
         const removedItem = watchItems.pop();
+        saveToStorage(); // Save after deleting last item
         console.log("Last item removed:", removedItem.title);
         updateWatchList();
         updateStats();
