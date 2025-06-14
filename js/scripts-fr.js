@@ -281,7 +281,7 @@ function getFormattedDate() {
   const hours = pad(now.getHours());
   const minutes = pad(now.getMinutes());
   
-  return `${month}/${day} à ${hours}:${minutes}`;
+  return `${month}/${day} - ${hours}:${minutes}`;
 }
 
 (function () {
