@@ -56,7 +56,6 @@ Un CRUD basique avec deux tables : `users` et `watch_items`. Chaque user a sa pr
 - **Films** : Ajouter/supprimer des films pour chaque user
 ### ajouter un video à un user
 ![Gif](https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExdTk3eGlyOWloY3U3djh6YXJscG9ydzBzcjZ0dG5qeGgxOTBhc2NhayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/sLvk6u8G5t8g6KMIjx/giphy.gif)
-- Interface simple pour tout gérer
 
 ## Tech
 
