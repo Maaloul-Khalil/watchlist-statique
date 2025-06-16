@@ -1,7 +1,6 @@
 # WatchLater Manager
 
 Un petit site pour sauvegarder ses films à regarder plus tard. Conçu avec Bootstrap 5 pour le design responsive et jQuery pour simplifier la manipulation du DOM
-[site]()
 <a href="https://maaloul-khalil.github.io/watchlist-statique/" 
    style="display: inline-block; padding: 8px 15px; background: #2d2d2d; color: white; text-decoration: none; border-radius: 4px; font-family: sans-serif;">
    Voir le projet sur GitHub Pages</a>
