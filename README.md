@@ -1,6 +1,6 @@
 # WatchLater Manager
 
-Un petit site pour sauvegarder ses films à regarder plus tard. Simple et efficace.
+Un petit site pour sauvegarder ses films à regarder plus tard. Conçu avec Bootstrap 5 pour le design responsive et jQuery pour simplifier la manipulation du DOM
 
 ## Comment ça marche
 
