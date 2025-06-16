@@ -36,10 +36,6 @@ Remplissez le formulaire à gauche, votre film apparaît en carte à droite. Vou
 
 ---
 
-📧 **Contact :** maaloulmohamedkhalil@isimsf.u-sfax.tn
-
----
-
 # Partie PHP - Dashboard Admin 
 
 Un dashboard SEPARE où j'applique les fondamentaux de PHP PDO. Ce dashboard permettra à l'admin de gérer les utilisateurs et leurs listes de films.
@@ -103,5 +99,8 @@ php CRUD preview/
 +---itemsCrud/           # CRUD films
 ```
 
+---
+
+**Contact :** maaloulmohamedkhalil@isimsf.u-sfax.tn
 
 ---
