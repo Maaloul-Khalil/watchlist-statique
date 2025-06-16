@@ -9,11 +9,22 @@
       <link rel="stylesheet" href="css/all.min.css" />
    </head>
    <body>
+      <nav id="topNavbar"
+         class="navbar navbar-expand-md navbar-light fixed-top"
+         style="background-color: transparent; transition: background-color 0.3s ease; z-index: 1000;">
+         <div class="container-fluid">
+            <div class="d-flex gap-2">
+               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#carouselModal">
+               CRUD preview </button>
+               <a href="https://github.com/Maaloul-Khalil/watchlist-statique" target="_blank" class="btn btn-primary">
+               <i class="fab fa-github me-2"></i> GitHub
+               </a>           
+            </div>
+            <div class="buttonRight d-flex gap-2">
+            </div>
+         </div>
+      </nav>
       <div class="container-fluid pt-0 px-3 px-sm-4 px-md-5 mx-auto py-5">
-      <!-- Header 
-         <header class="mb-4">
-            <h1 class="main-title">Watch Later Manager</h1>
-         </header>-->
       <section id="product-overview" class="d-flex flex-column justify-content-center align-items-center text-center text-white">
          <h1 >Watch Later Manager</h1>
          <p>Save videos to your watchlist and easily find them</p>
@@ -231,6 +242,72 @@
                <p>Made by Maaloul Mohamed Khalil – <a href="mailto:maaloulmohamedkhalil@isimsf.u-sfax.tn">Contact me</a></p>
             </div>
          </footer>
+      </div>
+      <div class="modal fade" id="carouselModal" tabindex="-1">
+         <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content bg-white">
+               <div class="modal-header border-0">
+                  <h5 class="modal-title"></h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+               </div>
+               <div class="modal-body p-0">
+                  <div id="carouselDark" class="carousel slide carousel-dark" data-bs-interval="false">
+                     <div class="carousel-inner">
+                        <div class="carousel-item active text-center">
+                           <img src="images/u1.gif"
+                              class="d-block w-100 p-3 border border-3 border-secondary rounded"
+                              alt="Slide 1">
+                           <div class="carousel-caption-custom">
+                              <h4 class="mb-1 fw-semibold text-dark">Modify User Name</h4>
+                              <p class="mb-0 text-muted"></p>
+                           </div>
+                        </div>
+                        <div class="carousel-item text-center">
+                           <img src="images/U2.gif"
+                              class="d-block w-100 p-3 border border-3 border-secondary rounded"
+                              alt="Slide 2">
+                           <div class="carousel-caption-custom">
+                              <h4 class="mb-1 fw-semibold text-dark">Delete and Create a user</h4>
+                              <p class="mb-0 text-muted"></p>
+                           </div>
+                        </div>
+                        <div class="carousel-item text-center">
+                           <img src="images/U3.gif"
+                              class="d-block w-100 p-3 border border-3 border-secondary rounded"
+                              alt="Slide 3">
+                           <div class="carousel-caption-custom">
+                              <h4 class="mb-1 fw-semibold text-dark">Empty user playlist</h4>
+                           </div>
+                        </div>
+                        <div class="carousel-item text-center">
+                           <img src="images/U4.gif"
+                              class="d-block w-100 p-3 border border-3 border-secondary rounded"
+                              alt="Slide 4">
+                           <div class="carousel-caption-custom">
+                              <h4 class="mb-1 fw-semibold text-dark">Adding a watchItem</h4>
+                           </div>
+                        </div>
+                        <div class="carousel-item text-center">
+                           <img src="images/uf.png"
+                              class="d-block w-100 p-3 border border-3 border-secondary rounded"
+                              alt="Slide 4">
+                           <div class="carousel-caption-custom">
+                              <h4 class="mb-1 fw-semibold text-dark">php utilisé</h4>
+                           </div>
+                        </div>
+                     </div>
+                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselDark" data-bs-slide="prev">
+                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                     <span class="visually-hidden">Previous</span>
+                     </button>
+                     <button class="carousel-control-next" type="button" data-bs-target="#carouselDark" data-bs-slide="next">
+                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                     <span class="visually-hidden">Next</span>
+                     </button>
+                  </div>
+               </div>
+            </div>
+         </div>
       </div>
       <script src="js/jquery-3.7.1.min.js"></script>
       <script src="js/bootstrap.bundle.min.js"></script>

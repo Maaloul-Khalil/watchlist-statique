@@ -385,12 +385,12 @@ body {
   }
 }
 
-  .watch-actions .btn {
-    padding: 0.3rem 0.6rem;
-    font-size: 1.2rem;
-    margin-bottom: 0 !important;
-    white-space: nowrap;
-  }
+.watch-actions .btn {
+  padding: 0.3rem 0.6rem;
+  font-size: 1.2rem;
+  margin-bottom: 0 !important;
+  white-space: nowrap;
+}
 
 /* (phones, less than 576px) */
 @media (max-width: 575px) {
@@ -401,11 +401,11 @@ body {
   .container-fluid {
     padding: 0.5rem 1rem;
   }
-
+  /*
   #product-overview {
     padding: 1.5rem 0;
   }
-
+*/
   #product-overview h1 {
     font-size: 1.8rem;
     margin-bottom: 0.5rem;
@@ -436,7 +436,7 @@ body {
   }
 
   .watch-link {
-    font-size: 2rem;
+    font-size: 1.4rem;
     line-height: 1.2;
     word-break: break-word;
   }
@@ -467,8 +467,6 @@ body {
     gap: 0.4rem;
     margin-top: 0.5rem;
   }
-
-
 
   .watch-actions .badge {
     margin: 0;
@@ -680,4 +678,180 @@ body {
 .dark-theme .watch-item {
   background: linear-gradient(to right, #4e54c8, #8f94fb);
   color: white;
+}
+
+/* Custom carousel styles for better mobile experience */
+.carousel-item img {
+  max-height: 70vh;
+  object-fit: contain;
+  background-color: #f8f9fa;
+}
+
+/* Enhanced carousel controls */
+.carousel-control-prev,
+.carousel-control-next {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.carousel-control-prev {
+  left: 15px;
+}
+
+.carousel-control-next {
+  right: 15px;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* Modal customizations */
+.modal-lg {
+  max-width: 900px;
+}
+
+.carousel-caption-custom {
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 8px;
+  margin: 10px;
+}
+
+/* Small media queries for mobile devices */
+@media (max-width: 576px) {
+  .modal-lg {
+    max-width: 95%;
+    margin: 10px auto;
+  }
+
+  .modal-content {
+    border-radius: 12px;
+  }
+
+  .carousel-item img {
+    max-height: 50vh;
+    padding: 10px !important;
+    border-width: 2px !important;
+  }
+
+  .carousel-control-prev,
+  .carousel-control-next {
+    width: 40px;
+    height: 40px;
+  }
+
+  .carousel-control-prev {
+    left: 10px;
+  }
+
+  .carousel-control-next {
+    right: 10px;
+  }
+
+  .carousel-caption-custom {
+    padding: 10px;
+    margin: 5px;
+  }
+
+  .carousel-caption-custom h4 {
+    font-size: 0.9rem;
+  }
+
+  .carousel-caption-custom p {
+    font-size: 0.8rem;
+  }
+
+  .modal-header {
+    padding: 15px;
+  }
+
+  .modal-title {
+    font-size: 1.1rem;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 400px) {
+  .modal-lg {
+    max-width: 98%;
+    margin: 5px auto;
+  }
+
+  .carousel-item img {
+    max-height: 40vh;
+    padding: 8px !important;
+  }
+
+  .carousel-control-prev,
+  .carousel-control-next {
+    width: 35px;
+    height: 35px;
+  }
+
+  .carousel-caption-custom {
+    padding: 8px;
+    margin: 3px;
+  }
+
+  .modal-header {
+    padding: 10px 15px;
+  }
+}
+
+/* Medium devices and up - enhanced styling */
+@media (min-width: 768px) {
+  .carousel-control-prev,
+  .carousel-control-next {
+    width: 60px;
+    height: 60px;
+  }
+
+  .carousel-control-prev {
+    left: 20px;
+  }
+
+  .carousel-control-next {
+    right: 20px;
+  }
+
+  .carousel-item img {
+    max-height: 75vh;
+  }
+}
+
+/* Large devices */
+@media (min-width: 992px) {
+  .modal-lg {
+    max-width: 1000px;
+  }
+
+  .carousel-item img {
+    max-height: 80vh;
+  }
+}
+
+/* Touch-friendly improvements */
+@media (hover: none) and (pointer: coarse) {
+  .carousel-control-prev,
+  .carousel-control-next {
+    opacity: 0.8;
+  }
+
+  .carousel-control-prev:active,
+  .carousel-control-next:active {
+    background: rgba(0, 0, 0, 0.4);
+  }
+}
+@media (max-width: 576px) {
+  .btn-primary {
+    font-size: 0.85rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.25rem;
+  }
 }

@@ -406,18 +406,16 @@ function getFormattedDate() {
     const langButtonLabel = isFrench ? "English" : "Français";
 
     const controls = `
-      <div id="floatingControls" class="d-flex flex-md-row flex-column gap-2 position-fixed" 
-           style="top: 20px; right: 20px; z-index: 1000;">
-        <button id="themeToggle" class="btn btn-secondary w-auto">
-          <i class="fas fa-moon"></i>
-        </button>
-        <button id="langSwitch" class="btn btn-primary w-auto">
-          ${langButtonLabel}
-        </button>
-      </div>
-    `;
+    <button id="themeToggle" class="btn btn-secondary">
+      <i class="fas fa-moon"></i>
+    </button>
+    <button id="langSwitch" class="btn btn-primary">
+      ${langButtonLabel}
+    </button>
+  `;
 
-    $("body").append(controls);
+    //$("body").append(controls);
+    $("#topNavbar .container-fluid").append(controls);
 
     $("#themeToggle").on("click", function () {
       $("body").toggleClass("dark-theme");
