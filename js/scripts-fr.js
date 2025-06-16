@@ -415,7 +415,7 @@ function getFormattedDate() {
   `;
 
     //$("body").append(controls);
-    $("#topNavbar .container-fluid").append(controls);
+    $("#topNavbar .buttonRight").append(controls);
 
     $("#themeToggle").on("click", function () {
       $("body").toggleClass("dark-theme");
